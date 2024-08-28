@@ -2,8 +2,10 @@
     <string name="app_name">Debugging</string>
     <string name="title_inspector">Inspector</string>
     <string name="title_memory_leaks">Memory Leaks</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_crashes">Crashes</string>
     <string name="get_value_from_database">Get value from database</string>
     <string name="start_background_task">Start background task</string>
     <string name="delayed_task_finished">Delayed task finished</string>
+    <string name="cause_a_random_crash">Cause a random crash</string>
+    <string name="crash">Crash</string>
 </resources>
