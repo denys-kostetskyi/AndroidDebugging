@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_inspector,
-                R.id.navigation_dashboard,
+                R.id.navigation_memory_leak,
                 R.id.navigation_notifications
             )
         )

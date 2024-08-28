@@ -12,10 +12,10 @@
         tools:layout="@layout/fragment_layout_inspector" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.denyskostetskyi.debugging.presentation.fragment.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_memory_leak"
+        android:name="com.denyskostetskyi.debugging.presentation.fragment.MemoryLeakFragment"
+        android:label="@string/title_memory_leaks"
+        tools:layout="@layout/fragment_memory_leak" />
 
     <fragment
         android:id="@+id/navigation_notifications"
