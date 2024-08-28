@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.denyskostetskyi.debugging.R
 import com.denyskostetskyi.debugging.data.Database
 import com.denyskostetskyi.debugging.databinding.FragmentMemoryLeakBinding
 
@@ -44,23 +45,17 @@ class MemoryLeakFragment : Fragment() {
     }
 
     private fun initViews() {
-        binding.buttonGetValueFromDatabase.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                val value = database.value
-                Toast.makeText(requireContext(), "Value: $value", Toast.LENGTH_SHORT).show()
-            }
-        })
-        binding.buttonStartBackgroundTask.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                startBackgroundTask()
-            }
-        })
+        binding.buttonGetValueFromDatabase.setOnClickListener {
+            val value = database.value
+            Toast.makeText(requireContext(), "Value: $value", Toast.LENGTH_SHORT).show()
+        }
+        binding.buttonStartBackgroundTask.setOnClickListener { startBackgroundTask() }
     }
 
     private fun startBackgroundTask() {
         if (!isBackgroundTaskRunning) {
             isBackgroundTaskRunning = handler.postDelayed({
-                binding.textViewDelayedTaskResult.text = "Delayed task finished"
+                binding.textViewDelayedTaskResult.text = getString(R.string.delayed_task_finished)
             }, TASK_POST_DELAY)
         }
     }
@@ -93,6 +88,8 @@ class MemoryLeakFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         Log.w(TAG, "onDestroyView")
+        handler.removeCallbacksAndMessages(null)
+        _binding = null
     }
 
     override fun onDestroy() {
