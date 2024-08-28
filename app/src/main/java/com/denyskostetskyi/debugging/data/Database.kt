@@ -11,7 +11,7 @@ class Database private constructor(private val context: Context) {
         private var instance: Database? = null
 
         fun getInstance(context: Context) = instance ?: synchronized(this) {
-            instance ?: Database(context).also { instance = it }
+            instance ?: Database(context.applicationContext).also { instance = it }
         }
     }
 }
