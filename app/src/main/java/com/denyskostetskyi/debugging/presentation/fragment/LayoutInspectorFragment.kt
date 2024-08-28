@@ -5,7 +5,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
+import com.denyskostetskyi.debugging.R
 import com.denyskostetskyi.debugging.databinding.FragmentLayoutInspectorBinding
 
 class LayoutInspectorFragment : Fragment() {
@@ -24,7 +26,14 @@ class LayoutInspectorFragment : Fragment() {
     ): View {
         _binding = FragmentLayoutInspectorBinding.inflate(inflater, container, false)
         Log.d(TAG, "onCreateView")
+        initListView()
         return binding.root
+    }
+
+    private fun initListView() {
+        val items = List(100) { index -> "Item $index" }
+        val adapter = ArrayAdapter(requireContext(), R.layout.item_list, R.id.item_text, items)
+        binding.listView.adapter = adapter
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
