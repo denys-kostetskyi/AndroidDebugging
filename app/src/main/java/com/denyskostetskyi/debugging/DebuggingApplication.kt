@@ -1,4 +1,4 @@
-package com.denyskostetskyi
+package com.denyskostetskyi.debugging
 
 import android.app.Application
 import android.util.Log

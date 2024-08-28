@@ -6,10 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.denyskostetskyi.debugging.databinding.FragmentHomeBinding
+import com.denyskostetskyi.debugging.databinding.FragmentLayoutInspectorBinding
 
-class HomeFragment : Fragment() {
-    private var _binding: FragmentHomeBinding? = null
+class LayoutInspectorFragment : Fragment() {
+    private var _binding: FragmentLayoutInspectorBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,7 +22,7 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentLayoutInspectorBinding.inflate(inflater, container, false)
         Log.d(TAG, "onCreateView")
         return binding.root
     }

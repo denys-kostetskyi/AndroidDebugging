@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_inspector">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.denyskostetskyi.debugging.presentation.fragment.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/navigation_inspector"
+        android:name="com.denyskostetskyi.debugging.presentation.fragment.LayoutInspectorFragment"
+        android:label="@string/title_inspector"
+        tools:layout="@layout/fragment_layout_inspector" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
