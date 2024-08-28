@@ -6,10 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.denyskostetskyi.debugging.databinding.FragmentDashboardBinding
+import com.denyskostetskyi.debugging.databinding.FragmentMemoryLeakBinding
 
-class DashboardFragment : Fragment() {
-    private var _binding: FragmentDashboardBinding? = null
+class MemoryLeakFragment : Fragment() {
+    private var _binding: FragmentMemoryLeakBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,7 +22,7 @@ class DashboardFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentDashboardBinding.inflate(inflater, container, false)
+        _binding = FragmentMemoryLeakBinding.inflate(inflater, container, false)
         Log.w(TAG, "onCreateView")
         return binding.root
     }
@@ -69,6 +69,6 @@ class DashboardFragment : Fragment() {
     }
 
     companion object {
-        private const val TAG = "DashboardFragment"
+        private const val TAG = "MemoryLeakFragment"
     }
 }

@@ -7,9 +7,9 @@
         android:title="@string/title_inspector" />
 
     <item
-        android:id="@+id/navigation_dashboard"
-        android:icon="@drawable/ic_dashboard_black_24dp"
-        android:title="@string/title_dashboard" />
+        android:id="@+id/navigation_memory_leak"
+        android:icon="@drawable/ic_memory_black_24dp"
+        android:title="@string/title_memory_leaks" />
 
     <item
         android:id="@+id/navigation_notifications"
