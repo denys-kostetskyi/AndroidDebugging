@@ -5,40 +5,37 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import com.denyskostetskyi.debugging.DebuggingApplication
 import com.denyskostetskyi.debugging.R
 import com.denyskostetskyi.debugging.databinding.FragmentCrashBinding
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.logEvent
 import kotlin.random.Random
 
-class CrashFragment : Fragment() {
+class CrashFragment : LoggingFragment() {
+    override val logTag = "CrashFragment"
+    override val logMethod: (tag: String, msg: String) -> Int = Log::v
+
     private var _binding: FragmentCrashBinding? = null
     private val binding get() = _binding!!
-    private val analytics = DebuggingApplication.firebaseAnalytics
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.v(TAG, "onCreate")
         analytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT) {
-            param(FirebaseAnalytics.Param.ITEM_ID, TAG)
+            param(FirebaseAnalytics.Param.ITEM_ID, logTag)
         }
     }
 
-    override fun onCreateView(
+    override fun createView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCrashBinding.inflate(inflater, container, false)
-        Log.v(TAG, "onCreateView")
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.v(TAG, "onViewCreated")
         setButtonClickListener()
     }
 
@@ -58,7 +55,7 @@ class CrashFragment : Fragment() {
 
     private fun throwNullPointerException() {
         val string: String? = null
-        Log.d(TAG, "${string!!.length}")
+        Log.d(logTag, "${string!!.length}")
     }
 
     private fun modifyUiOnBackgroundThread() {
@@ -70,48 +67,16 @@ class CrashFragment : Fragment() {
     private fun causeApplicationNotResponding() {
         while (true) {
             Thread.sleep(SLEEP_DURATION)
-            Log.d(TAG, "Blocking main thread")
+            Log.d(logTag, "Blocking main thread")
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        Log.v(TAG, "onStart")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.v(TAG, "onResume")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.v(TAG, "onPause")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.v(TAG, "onStop")
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.v(TAG, "onDestroyView")
         _binding = null
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.v(TAG, "onDestroy")
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        Log.v(TAG, "onDetach")
-    }
-
     companion object {
-        private const val TAG = "CrashFragment"
         private const val SLEEP_DURATION = 1000L
     }
 }
