@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.denyskostetskyi.debugging.DebuggingApplication
 import com.denyskostetskyi.debugging.R
 import com.denyskostetskyi.debugging.databinding.FragmentCrashBinding
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -18,7 +17,6 @@ class CrashFragment : LoggingFragment() {
 
     private var _binding: FragmentCrashBinding? = null
     private val binding get() = _binding!!
-    private val analytics = DebuggingApplication.firebaseAnalytics
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

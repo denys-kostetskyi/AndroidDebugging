@@ -5,10 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.denyskostetskyi.debugging.DebuggingApplication
 
 abstract class LoggingFragment : Fragment() {
     abstract val logTag: String
     abstract val logMethod: (tag: String, msg: String) -> Int
+
+    protected val analytics = DebuggingApplication.firebaseAnalytics
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

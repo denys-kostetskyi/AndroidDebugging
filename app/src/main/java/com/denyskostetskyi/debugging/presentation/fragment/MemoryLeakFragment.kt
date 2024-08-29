@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.denyskostetskyi.debugging.DebuggingApplication
 import com.denyskostetskyi.debugging.FirebaseCustomEvents
 import com.denyskostetskyi.debugging.R
 import com.denyskostetskyi.debugging.data.Database
@@ -26,7 +25,6 @@ class MemoryLeakFragment : LoggingFragment() {
     private var _binding: FragmentMemoryLeakBinding? = null
     private val binding get() = _binding!!
 
-    private val analytics = DebuggingApplication.firebaseAnalytics
     private val handler = Handler(Looper.getMainLooper())
     private lateinit var database: Database
     private var isBackgroundTaskRunning = false
