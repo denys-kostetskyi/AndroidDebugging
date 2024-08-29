@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import com.denyskostetskyi.debugging.DebuggingApplication
 import com.denyskostetskyi.debugging.FirebaseCustomEvents
 import com.denyskostetskyi.debugging.R
@@ -20,7 +19,10 @@ import com.google.firebase.analytics.logEvent
 import java.util.Date
 
 
-class MemoryLeakFragment : Fragment() {
+class MemoryLeakFragment : LoggingFragment() {
+    override val logTag = "MemoryLeakFragment"
+    override val logMethod: (tag: String, msg: String) -> Int = Log::i
+
     private var _binding: FragmentMemoryLeakBinding? = null
     private val binding get() = _binding!!
 
@@ -36,20 +38,18 @@ class MemoryLeakFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.w(TAG, "onCreate")
         analytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT) {
-            param(FirebaseAnalytics.Param.ITEM_ID, TAG)
+            param(FirebaseAnalytics.Param.ITEM_ID, logTag)
         }
     }
 
-    override fun onCreateView(
+    override fun createView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMemoryLeakBinding.inflate(inflater, container, false)
         initViews()
-        Log.w(TAG, "onCreateView")
         return binding.root
     }
 
@@ -73,50 +73,13 @@ class MemoryLeakFragment : Fragment() {
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        Log.w(TAG, "onViewCreated")
-    }
-
-    override fun onStart() {
-        super.onStart()
-        Log.w(TAG, "onStart")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.w(TAG, "onResume")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.w(TAG, "onPause")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.w(TAG, "onStop")
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.w(TAG, "onDestroyView")
         handler.removeCallbacksAndMessages(null)
         _binding = null
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.w(TAG, "onDestroy")
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        Log.w(TAG, "onDetach")
-    }
-
     companion object {
-        private const val TAG = "MemoryLeakFragment"
         private const val TASK_POST_DELAY = 20000L
     }
 }
