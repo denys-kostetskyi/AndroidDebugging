@@ -10,15 +10,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.denyskostetskyi.debugging.DebuggingApplication
+import com.denyskostetskyi.debugging.FirebaseCustomEvents
 import com.denyskostetskyi.debugging.R
 import com.denyskostetskyi.debugging.data.Database
 import com.denyskostetskyi.debugging.databinding.FragmentMemoryLeakBinding
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.logEvent
+import java.util.Date
 
 
 class MemoryLeakFragment : Fragment() {
     private var _binding: FragmentMemoryLeakBinding? = null
     private val binding get() = _binding!!
 
+    private val analytics = DebuggingApplication.firebaseAnalytics
     private val handler = Handler(Looper.getMainLooper())
     private lateinit var database: Database
     private var isBackgroundTaskRunning = false
@@ -31,6 +37,9 @@ class MemoryLeakFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.w(TAG, "onCreate")
+        analytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT) {
+            param(FirebaseAnalytics.Param.ITEM_ID, TAG)
+        }
     }
 
     override fun onCreateView(
@@ -47,6 +56,10 @@ class MemoryLeakFragment : Fragment() {
     private fun initViews() {
         binding.buttonGetValueFromDatabase.setOnClickListener {
             val value = database.value
+            analytics.logEvent(FirebaseCustomEvents.Event.ACCESS_DATABASE) {
+                param(FirebaseCustomEvents.Param.DATE_TIME, Date().toString())
+
+            }
             Toast.makeText(requireContext(), "Value: $value", Toast.LENGTH_SHORT).show()
         }
         binding.buttonStartBackgroundTask.setOnClickListener { startBackgroundTask() }

@@ -5,22 +5,22 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import com.denyskostetskyi.debugging.DebuggingApplication
 import com.denyskostetskyi.debugging.R
-import com.denyskostetskyi.debugging.databinding.FragmentLayoutInspectorBinding
+import com.denyskostetskyi.debugging.databinding.FragmentCrashBinding
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.logEvent
+import kotlin.random.Random
 
-class LayoutInspectorFragment : Fragment() {
-    private var _binding: FragmentLayoutInspectorBinding? = null
+class CrashFragment : Fragment() {
+    private var _binding: FragmentCrashBinding? = null
     private val binding get() = _binding!!
     private val analytics = DebuggingApplication.firebaseAnalytics
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d(TAG, "onCreate")
+        Log.v(TAG, "onCreate")
         analytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT) {
             param(FirebaseAnalytics.Param.ITEM_ID, TAG)
         }
@@ -31,60 +31,87 @@ class LayoutInspectorFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentLayoutInspectorBinding.inflate(inflater, container, false)
-        Log.d(TAG, "onCreateView")
-        initListView()
+        _binding = FragmentCrashBinding.inflate(inflater, container, false)
+        Log.v(TAG, "onCreateView")
         return binding.root
-    }
-
-    private fun initListView() {
-        val items = List(100) { index -> "Item $index" }
-        val adapter = ArrayAdapter(requireContext(), R.layout.item_list, R.id.item_text, items)
-        binding.listView.adapter = adapter
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d(TAG, "onViewCreated")
+        Log.v(TAG, "onViewCreated")
+        setButtonClickListener()
+    }
+
+    private fun setButtonClickListener() {
+        binding.buttonCauseRandomCrash.setOnClickListener {
+            causeRandomCrash()
+        }
+    }
+
+    private fun causeRandomCrash() {
+        when (Random.nextInt(3)) {
+            0 -> throwNullPointerException()
+            1 -> modifyUiOnBackgroundThread()
+            2 -> causeApplicationNotResponding()
+        }
+    }
+
+    private fun throwNullPointerException() {
+        val string: String? = null
+        Log.d(TAG, "${string!!.length}")
+    }
+
+    private fun modifyUiOnBackgroundThread() {
+        Thread {
+            binding.buttonCauseRandomCrash.text = getString(R.string.crash)
+        }.start()
+    }
+
+    private fun causeApplicationNotResponding() {
+        while (true) {
+            Thread.sleep(SLEEP_DURATION)
+            Log.d(TAG, "Blocking main thread")
+        }
     }
 
     override fun onStart() {
         super.onStart()
-        Log.d(TAG, "onStart")
+        Log.v(TAG, "onStart")
     }
 
     override fun onResume() {
         super.onResume()
-        Log.d(TAG, "onResume")
+        Log.v(TAG, "onResume")
     }
 
     override fun onPause() {
         super.onPause()
-        Log.d(TAG, "onPause")
+        Log.v(TAG, "onPause")
     }
 
     override fun onStop() {
         super.onStop()
-        Log.d(TAG, "onStop")
+        Log.v(TAG, "onStop")
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.d(TAG, "onDestroyView")
+        Log.v(TAG, "onDestroyView")
         _binding = null
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d(TAG, "onDestroy")
+        Log.v(TAG, "onDestroy")
     }
 
     override fun onDetach() {
         super.onDetach()
-        Log.d(TAG, "onDetach")
+        Log.v(TAG, "onDetach")
     }
 
     companion object {
-        private const val TAG = "HomeFragment"
+        private const val TAG = "CrashFragment"
+        private const val SLEEP_DURATION = 1000L
     }
 }

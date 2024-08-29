@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
             setOf(
                 R.id.navigation_inspector,
                 R.id.navigation_memory_leak,
-                R.id.navigation_notifications
+                R.id.navigation_crash
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
